@@ -1,6 +1,6 @@
 # Cohomological Risk Scoring
 
-**Author:** Idriss Bado
+**Author:** Idriss Olivier Bado
 
 A sophisticated Python package for financial risk assessment using cohomological methods, persistent homology, and sheaf theory. This framework provides a mathematically rigorous approach to identifying systemic risks and anomalies in financial transaction networks.
 
@@ -157,7 +157,7 @@ If you use this package in your research, please cite:
 
 ```bibtex
 @software{bado2025cohomological,
-  author = {Bado, Idriss},
+  author = {Bado, Idriss,Olivier},
   title = {Cohomological Risk Scoring: A Topological Approach to Financial Risk Assessment},
   year = {2025},
   url = {https://github.com/idrissbado/cohomological-risk-scoring}
