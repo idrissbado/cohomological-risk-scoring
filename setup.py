@@ -59,5 +59,6 @@ setup(
         "Bug Reports": "https://github.com/idrissbado/cohomological-risk-scoring/issues",
         "Source": "https://github.com/idrissbado/cohomological-risk-scoring",
         "Documentation": "https://cohomological-risk-scoring.readthedocs.io",
+        "Research Paper": "https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks",
     },
 )
