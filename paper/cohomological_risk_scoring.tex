@@ -1,0 +1,347 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{titlesec}
+\usepackage{abstract}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{setspace}
+
+% Page formatting
+\geometry{margin=1in}
+\linespread{1.15}
+\setlength{\absleftindent}{0pt}
+\setlength{\absrightindent}{0pt}
+
+% Theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% Custom commands
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathscr{F}}
+\newcommand{\K}{K}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\pers}{\operatorname{pers}}
+\newcommand{\PCR}{\operatorname{PCR}}
+\newcommand{\dgm}{\operatorname{Dgm}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sign}{\operatorname{sign}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\intr}{\operatorname{int}}
+\newcommand{\bd}{\partial}
+\newcommand{\const}{\operatorname{const}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\vb}{\mathbf}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mf}{\mathfrak}
+\newcommand{\sc}{\mathscr}
+
+% Title
+\title{\textbf{Cohomological Risk Scoring: \\ A Topological Framework for Detecting Structural Inconsistencies in Financial Networks}}
+\author{Idriss Olivier Bado}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% Abstract
+\begin{abstract}
+\noindent Risk scoring in modern finance remains predominantly reliant on statistical and machine-learning models that excel at identifying local, feature-based correlations but often fail to capture global, relational inconsistencies inherent in complex financial networks. This paper introduces a novel, theoretically-grounded framework that interprets financial risk as a \textbf{cohomological obstruction} to global data coherence. We model a financial ecosystem comprising users, merchants, accounts, and transactions as a \textbf{filtered simplicial complex} equipped with a \textbf{financial sheaf} that encodes heterogeneous local data (e.g., declared income, transaction volumes, behavioral metrics). Non-trivial cohomology classes in this sheaf, particularly those that persist across scaling parameters (time, transaction volume, trust thresholds), are shown to correspond to structural anomalies: fraud rings, money laundering loops, and systemic misreporting. We define the \textbf{Persistence of Cohomological Risk (PCR)} score, prove its stability under data perturbation and its guaranteed detection of cyclic fraud patterns, and provide an algorithmic locality theorem for efficient computation. This work establishes a foundational bridge between applied algebraic topology and computational finance, offering a mathematically rigorous tool for detecting risks invisible to conventional methods.
+
+\noindent\textbf{Keywords:} Topological Data Analysis, Sheaf Cohomology, Persistent Homology, Financial Risk, Fraud Detection, Network Analysis, Algorithmic Stability.
+\end{abstract}
+
+% Main content
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The Limits of Traditional Risk Models}
+The digital transformation of finance mobile money, peer-to-peer payments, decentralized finance has created ecosystems that are fundamentally \emph{relational} and \emph{dynamic}. Traditional risk-scoring models, from logistic regression to gradient-boosted trees, operate on a central assumption: an entity's risk can be predicted from a vector of its \emph{local features} (credit history, transaction frequency, device ID). While powerful, these models are inherently \emph{myopic}; they cannot see the structural contradictions that arise from the \emph{interactions} between entities. A user may have a pristine local feature vector yet be a central node in a circular transaction network designed to obscure fund origins. This global inconsistency is a primary marker of sophisticated fraud but remains undetectable by local classifiers.
+
+\subsection{Topology and Sheaves: A Language for Global Consistency}
+Topological Data Analysis (TDA), and specifically \emph{persistent homology}, has emerged as a potent tool for extracting global, shape-based insights from high-dimensional data \cite{carlsson2009topology}. Its application in finance has shown promise in identifying latent market states and anomalies \cite{chen2021topological}. Parallelly, \emph{sheaf theory} offers a rigorous mathematical framework for modeling data that is locally assigned but subject to global consistency constraints \cite{curry2013sheaves}. A sheaf can precisely encode how a user's declared income (a vertex's data) should align with their transaction volumes on adjacent edges. The failure of local data to glue together into a globally consistent whole is measured by \emph{sheaf cohomology}.
+
+\subsection{Contribution of This Work}
+This paper synthesizes these domains into a unified \emph{Cohomological Risk-Scoring Framework}. Our primary contributions are:
+\begin{enumerate}
+    \item \textbf{A Formal Financial Sheaf Model:} We provide the first complete formulation of a multi-scale financial network as a filtered simplicial complex with a sheaf of local features and relational constraints.
+    \item \textbf{The Cohomological Risk Class (CRC):} We define financial risk as a non-trivial, persistent cohomology class in the first cohomology group $H^1$.
+    \item \textbf{Theoretical Foundations:} We present and prove three core theorems:
+    \begin{itemize}
+        \item \textbf{Stability Theorem:} The persistence diagram of CRCs is stable under perturbations of financial data.
+        \item \textbf{Detection Theorem:} The framework guarantees the detection of a formally defined class of cyclic fraud patterns.
+        \item \textbf{Locality Theorem:} The risk score for any node can be computed efficiently from its local neighborhood.
+    \end{itemize}
+    \item \textbf{The PCR Score:} We derive a computable, node-level risk score from the persistent cohomology structure.
+    \item \textbf{Interpretive Framework:} We demonstrate how the representative cocycle of a CRC provides an interpretable "footprint" of the anomalous structure.
+\end{enumerate}
+
+We conclude by discussing the computational pipeline, practical implications, and limitations, charting a course for integrating topological methods into production risk engines.
+
+\section{Mathematical Preliminaries}
+\label{sec:prelim}
+
+\subsection{Simplicial Complexes of Financial Networks}
+A \emph{simplicial complex} $\K$ is a finite collection of simplices vertices ($0$-simplices), edges ($1$-simplices), triangles ($2$-simplices), etc. closed under taking faces. A financial network naturally gives rise to a simplicial complex:
+\begin{itemize}
+    \item \textbf{Vertices ($\K_0$):} Represent financial entities (users, merchants, bank accounts, devices).
+    \item \textbf{Edges ($\K_1$):} Represent observed relationships (a transaction, a shared IP address, a common beneficiary).
+    \item \textbf{Higher Simplices ($\K_{\geq 2}$):} Represent higher-order interactions. A $2$-simplex (triangle) can be added for any three entities that are all pairwise connected, capturing a triad. This is typically constructed as the \emph{clique complex} of the underlying transaction graph.
+\end{itemize}
+
+\subsection{(Co)Homology: Measuring Holes and Inconsistencies}
+For a simplicial complex $\K$, a $p$-\emph{chain} is a formal sum of $p$-simplices. The \emph{boundary map} $\partial_p: C_p(\K) \to C_{p-1}(\K)$ sends a simplex to the sum of its faces. The \emph{homology group} $H_p(\K) = \ker \partial_p / \im \partial_{p+1}$ quantifies $p$-dimensional "holes" (e.g., $H_0$ counts components, $H_1$ counts cycles).
+
+Dually, a $p$-\emph{cochain} $f$ assigns a real number to each $p$-simplex. The \emph{coboundary map} $\delta^p: C^p(\K) \to C^{p+1}(\K)$ is defined by $(\delta^p f)(\sigma) = \sum_{i} (-1)^i f(\sigma^{(i)})$, where $\sigma^{(i)}$ is the $i$-th face of the $(p+1)$-simplex $\sigma$. The \emph{cohomology group} $H^p(\K) = \ker \delta^p / \im \delta^{p-1}$ consists of equivalence classes of $p$-cocycles (cochains with zero coboundary) modulo $p$-coboundaries.
+
+\emph{Crucial Intuition:} A $1$-cocycle $f \in \ker \delta^1$ assigns numbers to edges such that for any triangle $[u,v,w]$, we have $f([u,v]) + f([v,w]) - f([u,w]) = 0$. This is a \emph{local consistency condition}. If the data assigned to edges (e.g., the discrepancy between users' reported and inferred transaction capacity) violates this condition, it represents a \emph{local inconsistency} that cannot be explained by any vertex-based data. This is the seed of our risk signal.
+
+\subsection{Sheaves and Sheaf Cohomology}
+A \emph{sheaf} $\F$ on $\K$ assigns:
+\begin{itemize}
+    \item A \emph{data space} $\F(\sigma)$ (e.g., $\R^d$) to each simplex $\sigma$.
+    \item A \emph{restriction map} $\rho_{\sigma \tau}: \F(\sigma) \to \F(\tau)$ for each face relation $\tau \subseteq \sigma$, satisfying compatibility conditions.
+\end{itemize}
+
+The \emph{cochain complex} $C^*(\K; \F)$ is formed by cochains with values in the sheaf: $C^p(\K; \F) = \prod_{\dim \sigma = p} \F(\sigma)$. The \emph{sheaf coboundary map} $\delta_{\F}$ generalizes the classical $\delta$ by applying the appropriate restriction maps. Its cohomology $H^p(\K; \F)$ measures the \emph{obstruction to solving global consistency equations} given local data assignments.
+
+\subsection{Persistent Homology}
+Given a \emph{filtration} $\{\K_t\}_{t \in \R}$ (a nested sequence of complexes ordered by a parameter like time or transaction threshold), persistent homology tracks the birth and death of homological features across $t$. The output is a \emph{persistence diagram} a multiset of points $(b, d)$ where $b$ is the birth scale and $d$ the death scale of a feature. Features far from the diagonal (with high persistence $d-b$) are considered robust signals. The \emph{Stability Theorem} \cite{cohen2007stability} guarantees that small perturbations in the data lead to small changes in the diagram under the bottleneck distance.
+
+\section{The Financial Sheaf Model}
+\label{sec:model}
+
+We now construct the core mathematical object of our framework.
+
+\subsection{The Filtered Financial Complex $\{\K_t\}$}
+Let $G = (V, E)$ be a financial graph. We construct a filtration parameterized by $t$, which can represent:
+\begin{itemize}
+    \item \textbf{Chronological Time:} $\K_t$ is the complex of all transactions up to time $t$.
+    \item \textbf{Transaction Volume Threshold:} An edge is included in $\K_t$ if the total transaction volume between the two vertices exceeds $t$.
+    \item \textbf{Trust Score:} Vertices and edges are included based on a composite trust metric.
+\end{itemize}
+The choice of filtration is application-dependent and encodes the analyst's hypothesis about how risk structures emerge.
+
+\subsection{The Financial Sheaf $\F$}
+We define the sheaf $\F$ to capture the key data and constraints:
+\begin{itemize}
+    \item \textbf{On a vertex $v$:} $\F(v) = \R^{d_v}$. A stalk might represent $d_v$ local features: declared annual income, average account balance, device risk score, KYC verification level.
+    \[
+    \mathbf{v} = (\text{income}, \text{balance}, \text{score}, \dots)^T \in \F(v)
+    \]
+    \item \textbf{On an edge $e = (u,v)$:} $\F(e) = \R$. This represents a \emph{relational} or \emph{comparative} feature. A canonical choice is the \emph{transaction flow} along the edge over the filtration period. Alternatively, it could be a measure of discrepancy or similarity.
+    \item \textbf{Restriction Maps:} These encode the expected relationship between vertex and edge data.
+    \begin{itemize}
+        \item $\rho_{v \to e}: \F(v) \to \F(e)$. This is a linear map (or more generally, a function) that predicts the edge value from the vertex data. For example, it could be a projection to a transaction capacity component of the vertex feature vector.
+    \end{itemize}
+    The \emph{consistency condition} on a triangle $\langle u,v,w \rangle$ is:
+    \[
+    \rho_{u \to (u,v)}( \mathbf{u} ) + \rho_{v \to (v,w)}( \mathbf{v} ) - \rho_{u \to (u,w)}( \mathbf{u} ) = 0 \quad \text{(modulo boundary terms)}
+    \]
+    This is a \emph{simplicial analog of a conservation law}. Violations indicate that the recorded transaction flows cannot be reconciled with the entities' declared financial profiles.
+\end{itemize}
+
+\subsection{Local Sections and Global Inconsistency}
+A \emph{local section} over a set of simplices is an assignment of data that respects all restriction maps. The space of \emph{global sections} $\Gamma(\K, \F)$ is the kernel of the first sheaf coboundary map $\delta^0_{\F}$:
+\[
+\Gamma(\K, \F) = \ker\left( \delta^0_{\F}: C^0(\K;\F) \to C^1(\K;\F) \right)
+\]
+If the observed edge data $g \in C^1(\K; \F)$ is not in the image of $\delta^0_{\F}$, it cannot be derived from any consistent set of vertex profiles. The degree to which it fails to be a coboundary is measured by the \emph{first sheaf cohomology group}:
+\[
+H^1(\K; \F) = \frac{\ker(\delta^1_{\F})}{\im(\delta^0_{\F})}
+\]
+
+\begin{definition}[Cohomological Risk Class - CRC]
+A \emph{Cohomological Risk Class} is a non-trivial cohomology class $[\omega] \in H^1(\K_t; \F_t)$ in the filtered financial sheaf at scale $t$. A representative $1$-cocycle $\omega$ for this class pinpoints the specific edges where local consistency fails.
+\end{definition}
+
+\section{Theoretical Foundations: Risk, Stability, and Detection}
+\label{sec:theory}
+
+\subsection{The Persistence of Cohomological Risk}
+As the parameter $t$ increases, we obtain a \emph{persistence module} of cohomology groups: $\{H^1(\K_t; \F_t)\}_{t \in \R}$. A CRC that appears at time $t_b$ and disappears at $t_d$ has persistence $\pers([\omega]) = t_d - t_b$.
+
+\begin{definition}[Persistence of Cohomological Risk - PCR Score]
+For a vertex $v$, its PCR score is defined as a weighted sum over all CRCs that involve edges incident to $v$:
+\[
+\PCR(v) = \sum_{[\omega] \in \mc{P}} \ind_{v \in \supp([\omega])} \cdot \pers([\omega]) \cdot \|[\omega]\|
+\]
+where $\mc{P}$ is the set of persistent CRCs, $\supp([\omega])$ is the set of vertices on the support of a minimal representative cocycle, $\pers([\omega])$ is its persistence, and $\|[\omega]\|$ is a norm (e.g., the $L^2$-norm of its representative).
+\end{definition}
+
+\subsection{Theorem 1: Stability of the CRC Persistence Diagram}
+
+\begin{theorem}[Stability]
+Let $D_1, D_2$ be two datasets derived from a financial network, giving rise to filtered financial sheaves $\{\F_{1,t}\}, \{\F_{2,t}\}$. Let $\dgm_1, \dgm_2$ be the persistence diagrams of their $H^1$ persistence modules. Then,
+\[
+d_B(\dgm_1, \dgm_2) \leq C \cdot d_{GH}((\K_1, \F_1), (\K_2, \F_2))
+\]
+where $d_B$ is the bottleneck distance, $d_{GH}$ is an adapted Gromov-Hausdorff distance between the attributed complexes, and $C$ is a constant depending on the Lipschitz properties of the sheaf restriction maps.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+The proof adapts the classical stability theorem \cite{cohen2007stability}. The key steps involve:
+\begin{enumerate}
+    \item Constructing a \emph{$\delta$-interleaving} between the two persistence modules by using the correspondence between the complexes provided by the Gromov-Hausdorff distance.
+    \item Showing that the sheaf data and restriction maps are \emph{Lipschitz continuous} with respect to the vertex/edge attributes.
+    \item Applying the algebraic stability lemma \cite{chazal2009gromov}, which states that $\delta$-interleaved persistence modules have bottleneck distance at most $\delta$. The constant $C$ absorbs the Lipschitz constants from the sheaf maps.
+\end{enumerate}
+\end{proof}
+
+\emph{Implication:} Small errors in data collection or reporting (e.g., minor misstated amounts, slight timing errors) lead to at most proportionally small changes in the computed PCR scores, ensuring the method's robustness.
+
+\subsection{Theorem 2: Detection of Cyclic Fraud Patterns}
+
+\begin{theorem}[Detection]
+Let $\K' \subset \K_t$ be a connected subcomplex isomorphic to a directed $k$-cycle $C_k = (v_1, v_2, \dots, v_k, v_1)$. Suppose the edge data $g \in C^1(\K'; \F)$ satisfies the \emph{cycle inconsistency condition}: the sum of the observed edge values, when compared to the values predicted by the (potentially falsified) vertex profiles, exceeds a threshold $\epsilon$. Formally,
+\[
+\left\| \sum_{i=1}^k \left( g(v_i, v_{i+1}) - \rho_{v_i \to e_i}(\mathbf{v}_i) \right) \right\| > \epsilon
+\]
+(with indices mod $k$). Then, this structure induces a non-trivial cohomology class $[\omega] \in H^1(\K'; \F|_{\K'})$. Furthermore, if this inconsistency is maintained over a filtration interval $[t_b, t_d)$, then $\pers([\omega]) \geq t_d - t_b$.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+\begin{enumerate}
+    \item The cycle inconsistency condition directly implies that the 1-cochain $\eta$, defined as the discrepancy $\eta(e_i) = g(e_i) - \rho(\mathbf{v}_i)$, is a \emph{non-zero cocycle} on the cyclic subcomplex $\K'$ because its coboundary is zero by construction (it is defined on a cycle with no bounding 2-chain).
+    \item To show it is not a coboundary, assume for contradiction that $\eta = \delta^0_{\F} \phi$ for some $\phi \in C^0$. Summing over the cycle leads to $\sum \eta(e_i) = \sum (\phi(v_{i+1}) - \phi(v_i)) = 0$, which contradicts the condition that the sum's norm exceeds $\epsilon > 0$.
+    \item The persistence claim follows from the definition of the filtration: if the inconsistent cycle is present and detectable from $t_b$ until it is "washed out" or corrected at $t_d$, the corresponding homological signal will exist throughout that interval.
+\end{enumerate}
+\end{proof}
+
+\emph{Implication:} The framework provides a formal guarantee for detecting the classic "money loop" or "circular trading" fraud pattern, a common yet elusive structure in financial crime.
+
+\subsection{Theorem 3: Locality and Polynomial-Time Computability}
+
+\begin{theorem}[Locality]
+For a vertex $v$, its PCR score can be $\epsilon$-approximated by computing persistent cohomology on the $r$-hop neighborhood $N_r(v)$ in the financial complex, for a radius $r = O(\log(1/\epsilon))$ dependent on the spectral gap of the sheaf Laplacian. Moreover, for a fixed sheaf dimension and radius $r$, the score is computable in time polynomial in the size of $|N_r(v)|$.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+\begin{enumerate}
+    \item Leverage the \emph{Mayer-Vietoris spectral sequence} or a \emph{sheaf-theoretic Čech argument} to show that the cohomology of a space can be computed from a cover. For a sheaf with \emph{decaying correlation}, the contribution of simplices beyond distance $r$ to the cohomology class at $v$ decays exponentially.
+    \item The polynomial-time claim follows because constructing the $r$-hop neighborhood and computing its persistent homology (via matrix reduction on the coboundary matrix) has complexity $O(m^3)$ where $m = |N_r(v)|$, which is manageable for small $r$.
+\end{enumerate}
+\end{proof}
+
+\emph{Implication:} The risk score is computationally feasible for large-scale, real-time applications, as it does not require analyzing the entire global network for each query.
+
+\section{Computational Pipeline and Interpretation}
+\label{sec:pipeline}
+
+\subsection{Pipeline Overview}
+\begin{enumerate}
+    \item \textbf{Data to Complex:} Construct the filtered simplicial complex $\{\K_t\}$ from transaction logs, user profiles, and relationship graphs.
+    \item \textbf{Sheaf Construction:} Define the financial sheaf $\F$ by choosing vertex features, edge data, and meaningful linear restriction maps.
+    \item \textbf{Persistence Computation:} Compute the persistence module $\{H^1(\K_t; \F_t)\}$ using an adapted version of the \emph{Vietoris-Rips} or \emph{clique complex} persistence algorithm. Libraries like \texttt{giotto-tda} can be adapted for sheaf coefficients.
+    \item \textbf{Score Assignment:} Extract the persistence diagram, identify long-lived CRCs, and compute the PCR score for each vertex via Definition 4.1.
+    \item \textbf{Interpretation:} For high-scoring vertices, extract a minimal representative cocycle $\omega$ for the dominant CRC. The edges where $|\omega(e)|$ is large directly indicate the problematic relationships constituting the anomaly.
+\end{enumerate}
+
+\subsection{Interpretability Advantage}
+Unlike black-box ML models, this method provides \emph{structural explanations}. A high PCR score for a user comes with a \emph{certificate of risk}: the specific cycle of transactions or relationships (the support of $\omega$) that is inconsistent with the reported node-level data. This is invaluable for financial investigators.
+
+\section{Discussion, Limitations, and Future Work}
+\label{sec:discussion}
+
+\subsection{Advantages Over Traditional Methods}
+\begin{itemize}
+    \item \textbf{Global Perspective:} Detects systemic, relational risks invisible to local models.
+    \item \textbf{Robustness:} Inherits stability guarantees from TDA.
+    \item \textbf{Interpretability:} Provides a topological footprint of the anomaly.
+    \item \textbf{Heterogeneous Data Integration:} Sheaves naturally combine different data types (numerical, categorical) from different simplices.
+\end{itemize}
+
+\subsection{Limitations and Challenges}
+\begin{itemize}
+    \item \textbf{Computational Complexity:} Full persistent cohomology computation can be heavy for enormous complexes (mitigated by Theorem 3 on locality).
+    \item \textbf{Sheaf Design:} Choosing optimal vertex features and, critically, the \emph{restriction maps} requires domain expertise and affects performance.
+    \item \textbf{Filtration Sensitivity:} The results depend on the chosen filtration. A poor choice may miss signals or create noise.
+\end{itemize}
+
+\subsection{Future Directions}
+\begin{itemize}
+    \item \textbf{Learning the Sheaf:} Use machine learning to infer optimal restriction maps from labeled fraud data.
+    \item \textbf{Dynamic Updates:} Develop streaming algorithms to update persistence diagrams and PCR scores in real-time as new transactions arrive.
+    \item \textbf{Integration with ML:} Use the PCR score as a powerful feature in a broader ensemble model combining topological and local signals.
+    \item \textbf{Applications Beyond Fraud:} Adapt the framework for credit network stability analysis, detection of market manipulation collusion, or AML (Anti-Money Laundering) monitoring.
+\end{itemize}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have introduced a complete cohomological framework for risk scoring in financial networks. By modeling financial data as a sheaf over a filtered simplicial complex, we recast the problem of risk detection into the problem of finding \emph{persistent obstructions to global consistency}. The defined PCR score, backed by theorems of stability, detection, and computability, offers a mathematically rigorous, interpretable, and robust tool for the next generation of financial surveillance systems. This work opens the door for the applied topology community to engage with critical problems in economic security and provides a new foundational language for reasoning about systemic risk in complex networks.
+
+% Bibliography
+\begin{thebibliography}{10}
+
+\bibitem{carlsson2009topology}
+Carlsson, G. (2009).
+\newblock Topology and data.
+\newblock \emph{Bulletin of the American Mathematical Society}, 46(2):255--308.
+
+\bibitem{chen2021topological}
+Chen, J., Gong, Z., and Wang, L. (2021).
+\newblock Using topological data analysis and persistent homology to analyze stock markets.
+\newblock \emph{Frontiers in Physics}, 9:613.
+
+\bibitem{cohen2007stability}
+Cohen-Steiner, D., Edelsbrunner, H., and Harer, J. (2007).
+\newblock Stability of persistence diagrams.
+\newblock \emph{Discrete \& Computational Geometry}, 37(1):103--120.
+
+\bibitem{curry2013sheaves}
+Curry, J. (2013).
+\newblock Sheaves, cosheaves and applications.
+\newblock \emph{arXiv preprint arXiv:1303.3255}.
+
+\bibitem{chazal2009gromov}
+Chazal, F., et al. (2009).
+\newblock Gromov-Hausdorff stable signatures for shapes using persistence.
+\newblock \emph{Computer Graphics Forum}.
+
+\end{thebibliography}
+
+\end{document}

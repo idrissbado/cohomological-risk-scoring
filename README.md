@@ -1,5 +1,10 @@
 # Cohomological Risk Scoring
 
+[![PyPI version](https://img.shields.io/pypi/v/cohomological-risk-scoring.svg)](https://pypi.org/project/cohomological-risk-scoring/)
+[![Python versions](https://img.shields.io/pypi/pyversions/cohomological-risk-scoring.svg)](https://pypi.org/project/cohomological-risk-scoring/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation Status](https://readthedocs.org/projects/cohomological-risk-scoring/badge/?version=latest)](https://cohomological-risk-scoring.readthedocs.io/en/latest/?badge=latest)
+
 **Author:** Idriss Bado
 
 A sophisticated Python package for financial risk assessment using cohomological methods, persistent homology, and sheaf theory. This framework provides a mathematically rigorous approach to identifying systemic risks and anomalies in financial transaction networks.
