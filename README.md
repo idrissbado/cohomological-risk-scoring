@@ -4,8 +4,11 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/cohomological-risk-scoring.svg)](https://pypi.org/project/cohomological-risk-scoring/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation Status](https://readthedocs.org/projects/cohomological-risk-scoring/badge/?version=latest)](https://cohomological-risk-scoring.readthedocs.io/en/latest/?badge=latest)
+[![Research Paper](https://img.shields.io/badge/Research-ResearchGate-00CCBB.svg)](https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks)
 
 **Author:** Idriss Bado
+
+📄 **[Read the Research Paper](https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks)** - Full theoretical treatment with proofs and mathematical foundations.
 
 A sophisticated Python package for financial risk assessment using cohomological methods, persistent homology, and sheaf theory. This framework provides a mathematically rigorous approach to identifying systemic risks and anomalies in financial transaction networks.
 
@@ -158,14 +161,36 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 ## Citation
 
-If you use this package in your research, please cite:
+If you use this package in your research or production systems, please cite:
+
+### Research Paper
+
+**Bado, I. O. (2025).** *Cohomological Risk Scoring: A Topological Framework for Detecting Structural Inconsistencies in Financial Networks.* 
+
+📄 **[View on ResearchGate](https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks)**
 
 ```bibtex
-@software{bado2025cohomological,
-  author = {Bado, Idriss},
-  title = {Cohomological Risk Scoring: A Topological Approach to Financial Risk Assessment},
+@article{bado2025cohomological,
+  author = {Bado, Idriss Olivier},
+  title = {Cohomological Risk Scoring: A Topological Framework for Detecting 
+           Structural Inconsistencies in Financial Networks},
   year = {2025},
-  url = {https://github.com/idrissbado/cohomological-risk-scoring}
+  journal = {ResearchGate Preprint},
+  doi = {10.13140/RG.2.2.XXXXX.XXXXX},
+  url = {https://www.researchgate.net/publication/398275656}
+}
+```
+
+### Software Package
+
+```bibtex
+@software{bado2025cohomological_software,
+  author = {Bado, Idriss Olivier},
+  title = {cohomological-risk-scoring: Python Package for Topological Risk Assessment},
+  year = {2025},
+  version = {0.1.0},
+  url = {https://github.com/idrissbado/cohomological-risk-scoring},
+  note = {Python package available on PyPI}
 }
 ```
 
@@ -198,6 +223,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## References
 
-1. Carlsson, G. (2009). "Topology and data." Bulletin of the American Mathematical Society, 46(2), 255-308.
+### Primary Publication
+
+**Bado, I. O. (2025).** "Cohomological Risk Scoring: A Topological Framework for Detecting Structural Inconsistencies in Financial Networks."  
+📄 [Read on ResearchGate](https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks)
+
+### Key References
+
+1. Carlsson, G. (2009). "Topology and data." *Bulletin of the American Mathematical Society*, 46(2), 255-308.
 2. Ghrist, R. (2014). "Elementary Applied Topology." Createspace.
-3. Hansen, J., & Ghrist, R. (2019). "Toward a spectral theory of cellular sheaves." Journal of Applied and Computational Topology, 3(4), 315-358.
+3. Hansen, J., & Ghrist, R. (2019). "Toward a spectral theory of cellular sheaves." *Journal of Applied and Computational Topology*, 3(4), 315-358.
+4. Cohen-Steiner, D., Edelsbrunner, H., & Harer, J. (2007). "Stability of persistence diagrams." *Discrete & Computational Geometry*, 37(1), 103-120.

@@ -5,6 +5,8 @@ Cohomological Risk Scoring Documentation
 
 This framework interprets financial risk as a cohomological obstruction to global data coherence in financial networks.
 
+📄 **Research Paper:** `Bado, I. O. (2025). Cohomological Risk Scoring: A Topological Framework for Detecting Structural Inconsistencies in Financial Networks <https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks>`_
+
 .. image:: https://img.shields.io/pypi/v/cohomological-risk-scoring.svg
    :target: https://pypi.org/project/cohomological-risk-scoring/
    :alt: PyPI version
@@ -12,6 +14,10 @@ This framework interprets financial risk as a cohomological obstruction to globa
 .. image:: https://img.shields.io/pypi/pyversions/cohomological-risk-scoring.svg
    :target: https://pypi.org/project/cohomological-risk-scoring/
    :alt: Python versions
+
+.. image:: https://img.shields.io/badge/Research-ResearchGate-00CCBB.svg
+   :target: https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks
+   :alt: Research Paper
 
 Installation
 ------------

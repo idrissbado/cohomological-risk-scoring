@@ -1,6 +1,10 @@
 Theoretical Background
 ======================
 
+**Full Theoretical Treatment:** For complete mathematical proofs and detailed theoretical foundations, see the research paper:
+
+`Bado, I. O. (2025). "Cohomological Risk Scoring: A Topological Framework for Detecting Structural Inconsistencies in Financial Networks." <https://www.researchgate.net/publication/398275656_Cohomological_Risk_Scoring_A_Topological_Framework_for_Detecting_Structural_Inconsistencies_in_Financial_Networks>`_
+
 Mathematical Foundations
 ------------------------
 
